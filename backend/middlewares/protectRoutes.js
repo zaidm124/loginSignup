@@ -3,7 +3,7 @@ const User = require("../models/user.model");
 const ErrorResponse = require("../utils/ErrorResponse");
 const asyncHandler = require("./asyncHandler");
 
-exports.userAuthentication = () => 
+exports.userAuthentication = () =>
   asyncHandler(async (req, res, next) => {
     let accessToken;
 
@@ -24,23 +24,23 @@ exports.userAuthentication = () =>
       throw new ErrorResponse(
         `You are not authorized to access this resource`,
         401
-      );    
+      );
     }
 
     // Decode and Verify the token
     const decodedToken = decryptAccessToken(accessToken);
-    console.log(decodedToken)
+    console.log(decodedToken);
 
     // Find User from payload
     const requested_user = await User.findOne({
-    //   username: decodedToken.username,
+      username: decodedToken.username,
       _id: decodedToken.static_id,
     });
 
-    if(!requested_user){
-        throw new ErrorResponse("No user found",403)
+    if (!requested_user) {
+      throw new ErrorResponse("No user found", 403);
     }
 
-    req.user=requested_user;
+    req.user = requested_user;
     next();
   });
