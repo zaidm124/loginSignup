@@ -29,13 +29,15 @@ exports.userAuthentication = () =>
 
     // Decode and Verify the token
     const decodedToken = decryptAccessToken(accessToken);
-    console.log(decodedToken);
+    // console.log(decodedToken);
 
     // Find User from payload
     const requested_user = await User.findOne({
       username: decodedToken.username,
       _id: decodedToken.static_id,
-    });
+    }).populate({ path: "group", populate: { path: "roles" } });
+
+    console.log(JSON.stringify(requested_user));
 
     if (!requested_user) {
       throw new ErrorResponse("No user found", 403);

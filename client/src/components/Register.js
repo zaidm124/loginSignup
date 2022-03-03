@@ -1,6 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  BrowserRouter,
+} from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -33,7 +39,7 @@ export default function Register() {
       console.log(data);
     } catch (err) {
       setError(err.response.data.error);
-      window.alert(err.response.data.message);
+      window.alert(err.response.data.error);
     }
   };
   return (
@@ -78,3 +84,11 @@ export default function Register() {
     </div>
   );
 }
+
+// function Register() {
+//   return (
+//     <Router>
+//       <Root />
+//     </Router>
+//   );
+// }

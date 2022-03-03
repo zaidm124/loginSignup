@@ -15,3 +15,5 @@ app.listen(PORT, async () => {
   console.log("Server running at PORT 5000");
   await connectDB();
 });
+
+module.exports = app;

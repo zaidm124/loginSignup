@@ -1,10 +1,11 @@
 const ErrorResponse = require("../utils/ErrorResponse");
 
 module.exports = (err, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status(statusCode);
-  res.json({
+  let error = { ...err };
+  error.message = err.message;
+  return res.status(error.statusCode || 500).json({
     success: false,
-    message: err.message,
+    error: error.message.trim() || "Server Error",
+    details: error.errors || undefined,
   });
 };

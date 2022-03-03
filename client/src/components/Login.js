@@ -4,10 +4,13 @@ import {
   Routes,
   Route,
   useNavigate,
+  BrowserRouter,
 } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
+  
+
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +38,7 @@ export default function Login() {
       console.log(data);
     } catch (err) {
       setError(err.response.data.error);
-      window.alert(err.response.data.message);
+      window.alert(err.response.data.error);
     }
   };
 
@@ -65,3 +68,11 @@ export default function Login() {
     </div>
   );
 }
+
+// function Login() {
+//   return (
+//     <Router>
+//       <Root />
+//     </Router>
+//   );
+// }
