@@ -1,7 +1,7 @@
 import "./App.css";
 import {
   BrowserRouter as Router,
-  Routes,
+  Switch,
   Route,
   BrowserRouter,
 } from "react-router-dom";
@@ -13,11 +13,17 @@ function App() {
   return (
     <div>
       <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
+        <Switch>
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+          <Route path="/register" exact>
+            <Register />
+          </Route>
+          <Route path="/" exact>
+            <Dashboard />
+          </Route>
+        </Switch>
       </Router>
     </div>
   );

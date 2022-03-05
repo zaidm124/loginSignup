@@ -1,15 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  BrowserRouter,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function Register() {
-  const navigate = useNavigate();
+  let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -35,8 +29,8 @@ export default function Register() {
         config
       );
       localStorage.setItem("token", data.responses.accessToken);
-      navigate("/");
       console.log(data);
+      history.push("/");
     } catch (err) {
       setError(err.response.data.error);
       window.alert(err.response.data.error);
@@ -84,11 +78,3 @@ export default function Register() {
     </div>
   );
 }
-
-// function Register() {
-//   return (
-//     <Router>
-//       <Root />
-//     </Router>
-//   );
-// }

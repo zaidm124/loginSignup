@@ -13,10 +13,16 @@ describe("App", () => {
 });
 describe("Login", () => {
   test("renders Login component without crashing", () => {
-    render(
-      <Router>
-        <Login />
-      </Router>
-    );
+    render(<Login />);
+  });
+});
+describe("Sign Up", () => {
+  test("renders Sign Up component without crashing", () => {
+    render(<Register />);
+  });
+});
+describe("Dashboard", () => {
+  test("renders Dashboard component without crashing", () => {
+    render(<Dashboard />);
   });
 });

@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  BrowserRouter,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
-  
-
-  const navigate = useNavigate();
+  let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
+      const { data } = await axios.get("/api/v1/profile", config);
+      console.log(data);
+      history.push("/");
+    } catch (err) {
+      setError(err.response.data.error);
+    }
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -34,8 +41,8 @@ export default function Login() {
         config
       );
       localStorage.setItem("token", data.responses.accessToken);
-      navigate("/");
       console.log(data);
+      history.push("/");
     } catch (err) {
       setError(err.response.data.error);
       window.alert(err.response.data.error);
@@ -68,11 +75,3 @@ export default function Login() {
     </div>
   );
 }
-
-// function Login() {
-//   return (
-//     <Router>
-//       <Root />
-//     </Router>
-//   );
-// }

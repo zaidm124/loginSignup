@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function Dashboard() {
+  let history = useHistory();
   const [detail, setDetail] = useState([]);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   useEffect(async () => {
     try {
@@ -23,33 +18,25 @@ export default function Dashboard() {
       setDetail(data.user);
       console.log(data);
     } catch (err) {
+      history.push("/login");
       setError(err.response.data.error);
-      navigate("/login");
     }
   }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    history.push("/login");
   };
   return (
     <div>
       <div>
         <button onClick={logout}>Logout</button>
         <div>
-          <div>Name:{detail.name}</div>
-          <div>Username:{detail.username}</div>
-          <div>UserType:{detail.userType}</div>
+          <div>Name:{detail?.name}</div>
+          <div>Username:{detail?.username}</div>
+          <div>Group Name:{detail?.group?.groupName}</div>
         </div>
       </div>
     </div>
   );
 }
-
-// function Dashboard() {
-//   return (
-//     <Router>
-//       <Root />
-//     </Router>
-//   );
-// }
